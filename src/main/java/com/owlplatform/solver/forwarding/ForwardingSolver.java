@@ -177,12 +177,15 @@ public class ForwardingSolver implements ConnectionListener,
 
   protected void processSample(final SampleMessage sample) {
 
-    ++this.samplesForwarded;
+    boolean success = false;
     
     for (SensorAggregatorInterface outAgg : this.outputAggregators) {
 
-      outAgg.sendSample(sample);
+      success |= outAgg.sendSample(sample);
 
+    }
+    if(success){
+      ++this.samplesForwarded;
     }
   }
 
